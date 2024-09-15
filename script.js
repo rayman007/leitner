@@ -147,3 +147,14 @@ window.onload = function() {
     updateUI();
     getRandomPartition();
 };
+
+// Fonction pour ouvrir/fermer les boîtes
+document.addEventListener('DOMContentLoaded', () => {
+    const boxContainers = document.querySelectorAll('.box-container');
+
+    boxContainers.forEach(container => {
+        container.addEventListener('click', () => {
+            container.classList.toggle('open');
+        });
+    });
+});

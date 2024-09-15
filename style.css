@@ -1,3 +1,18 @@
+/* Réinitialisation des styles par défaut */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style général du corps */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* Style de la navigation */
 nav {
     background-color: #333;
     padding: 10px;
@@ -26,10 +41,67 @@ nav ul li a:hover {
     background-color: #777;
 }
 
+/* Style des sections */
 .page-section {
     margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
+/* Style des boîtes */
+.box-container {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+}
+
+.box-content {
+    display: none;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+}
+
+/* Style pour le titre des boîtes */
+.box-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Style pour les boîtes ouvertes */
+.box-container.open .box-content {
+    display: block;
+}
+
+.box-container.open .box-title {
+    background-color: #ddd;
+}
+
+/* Style des éléments de liste de boîtes */
+#boxes ul {
+    list-style: none;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 0 0 5px 5px;
+}
+
+#boxes li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+#boxes li:last-child {
+    border-bottom: none;
+}
+
+/* Style des éléments de suppression */
 .delete-cross {
     color: red;
     cursor: pointer;
@@ -39,4 +111,34 @@ nav ul li a:hover {
 
 .delete-cross:hover {
     color: darkred;
+}
+
+/* Style des boutons */
+button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+button:hover {
+    background: #555;
+}
+
+/* Style des champs de texte */
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: calc(100% - 22px);
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #333;
 }
