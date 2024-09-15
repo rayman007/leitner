@@ -37,7 +37,18 @@ function isDueForRevision(dueDate) {
     return new Date(dueDate) <= today;
 }
 
-// Mettre à jour l'interface utilisateur
+// Fonction pour mettre à jour les titres des boîtes avec le nombre de partitions
+function updateBoxTitles() {
+    for (let i = 1; i <= 7; i++) {
+        const boxTitle = document.querySelector(`.box-container[data-box="${i}"] .box-title`);
+        if (boxTitle) {
+            const partitionCount = boxes[i].length;
+            boxTitle.innerHTML = `Boîte ${i} (${partitionCount} partition${partitionCount !== 1 ? 's' : ''})`;
+        }
+    }
+}
+
+// Fonction pour mettre à jour l'interface utilisateur
 function updateUI() {
     for (let i = 1; i <= 7; i++) {
         const ul = document.getElementById(`box${i}`);
@@ -53,6 +64,7 @@ function updateUI() {
             });
         }
     }
+    updateBoxTitles(); // Met à jour les titres des boîtes avec le nombre de partitions
     localStorage.setItem('leitnerBoxes', JSON.stringify(boxes));
 
     document.querySelectorAll('.delete-cross').forEach(cross => {
@@ -63,6 +75,8 @@ function updateUI() {
         });
     });
 }
+
+// Le reste du code reste inchangé...
 
 // Navigation entre les pages
 function showPage(sectionId) {
