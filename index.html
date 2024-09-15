@@ -1,42 +1,71 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apprentissage des Partitions - Boîtes de Leitner</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Leitner Piano Practice</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Apprentissage des Partitions de Piano avec les Boîtes de Leitner</h1>
-    </header>
 
-    <main>
-        <section id="leitner-boxes">
-            <div class="box" data-box="1"><h2>Boîte 1</h2><ul id="box1"></ul></div>
-            <div class="box" data-box="2"><h2>Boîte 2</h2><ul id="box2"></ul></div>
-            <div class="box" data-box="3"><h2>Boîte 3</h2><ul id="box3"></ul></div>
-            <div class="box" data-box="4"><h2>Boîte 4</h2><ul id="box4"></ul></div>
-            <div class="box" data-box="5"><h2>Boîte 5</h2><ul id="box5"></ul></div>
-            <div class="box" data-box="6"><h2>Boîte 6</h2><ul id="box6"></ul></div>
-            <div class="box" data-box="7"><h2>Boîte 7</h2><ul id="box7"></ul></div>
-        </section>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#" id="view-boxes">Voir les Boîtes</a></li>
+            <li><a href="#" id="add-partition">Ajouter une Partition</a></li>
+            <li><a href="#" id="today-revisions">Partitions à Réviser Aujourd'hui</a></li>
+        </ul>
+    </nav>
 
-        <section id="add-partition">
-            <h3>Ajouter une partition</h3>
-            <input type="text" id="partition-name" placeholder="Nom de la partition">
-            <button id="add-button">Ajouter</button>
-        </section>
-
-        <section id="practice">
-            <h3>Pratiquer</h3>
-            <div id="current-partition">
-                <p id="partition-display">Sélectionner une partition pour commencer</p>
-                <button id="correct-button">Correct</button>
-                <button id="incorrect-button">Incorrect</button>
+    <!-- Page: Voir les boîtes -->
+    <section id="view-boxes-section" class="page-section">
+        <h2>Boîtes Leitner</h2>
+        <div id="boxes">
+            <div>
+                <h3>Boîte 1</h3>
+                <ul id="box1"></ul>
             </div>
-        </section>
-    </main>
+            <div>
+                <h3>Boîte 2</h3>
+                <ul id="box2"></ul>
+            </div>
+            <div>
+                <h3>Boîte 3</h3>
+                <ul id="box3"></ul>
+            </div>
+            <div>
+                <h3>Boîte 4</h3>
+                <ul id="box4"></ul>
+            </div>
+            <div>
+                <h3>Boîte 5</h3>
+                <ul id="box5"></ul>
+            </div>
+            <div>
+                <h3>Boîte 6</h3>
+                <ul id="box6"></ul>
+            </div>
+            <div>
+                <h3>Boîte 7</h3>
+                <ul id="box7"></ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page: Ajouter une partition -->
+    <section id="add-partition-section" class="page-section" style="display: none;">
+        <h2>Ajouter une Partition</h2>
+        <input type="text" id="partition-name" placeholder="Nom de la partition">
+        <button id="add-button">Ajouter</button>
+    </section>
+
+    <!-- Page: Partitions à réviser aujourd'hui -->
+    <section id="today-revisions-section" class="page-section" style="display: none;">
+        <h2>Partitions à Réviser Aujourd'hui</h2>
+        <p id="partition-display">Aucune partition due pour révision</p>
+        <button id="correct-button">Correct</button>
+        <button id="incorrect-button">Incorrect</button>
+    </section>
 
     <script src="script.js"></script>
 </body>
