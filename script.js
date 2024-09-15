@@ -71,12 +71,10 @@ function updateUI() {
         cross.addEventListener('click', (e) => {
             const boxNumber = e.target.getAttribute('data-box');
             const partitionIndex = e.target.getAttribute('data-index');
-            confirmDeletePartition(boxNumber, partitionIndex);
+            showEditPartitionSection(boxes[boxNumber][partitionIndex], boxNumber, partitionIndex);
         });
     });
 }
-
-// Le reste du code reste inchangé...
 
 // Navigation entre les pages
 function showPage(sectionId) {
@@ -142,25 +140,51 @@ document.getElementById('incorrect-button').addEventListener('click', () => {
     }
 });
 
-// Fonction pour confirmer la suppression
-function confirmDeletePartition(boxNumber, partitionIndex) {
-    const confirmation = confirm("Voulez-vous vraiment supprimer cette partition ?");
-    if (confirmation) {
-        deletePartition(boxNumber, partitionIndex);
+// Fonction pour afficher la section de modification
+function showEditPartitionSection(partition, boxNumber, index) {
+    editPartition = { partition, boxNumber, index };
+    document.getElementById('edit-partition-name').value = partition.name;
+    document.getElementById('edit-box-number').value = boxNumber;
+    document.getElementById('edit-due-date').value = partition.dueDate;
+    showPage('edit-partition-section');
+}
+
+// Fonction pour enregistrer les modifications de la partition
+function saveEditPartition() {
+    if (editPartition) {
+        const newName = document.getElementById('edit-partition-name').value;
+        const newBoxNumber = parseInt(document.getElementById('edit-box-number').value, 10);
+        const newDueDate = document.getElementById('edit-due-date').value;
+
+        // Supprimer la partition de l'ancienne boîte
+        boxes[editPartition.boxNumber].splice(editPartition.index, 1);
+
+        // Mettre à jour la partition avec les nouvelles valeurs
+        editPartition.partition.name = newName;
+        editPartition.partition.dueDate = newDueDate;
+
+        // Ajouter la partition à la nouvelle boîte
+        boxes[newBoxNumber].push(editPartition.partition);
+
+        // Réinitialiser la sélection de partition en cours
+        editPartition = null;
+        
+        updateUI();
+        showPage('view-boxes-section');
     }
 }
 
-// Fonction pour supprimer une partition
-function deletePartition(boxNumber, partitionIndex) {
-    boxes[boxNumber].splice(partitionIndex, 1);
-    updateUI();
+// Fonction pour annuler la modification
+function cancelEditPartition() {
+    editPartition = null;
+    showPage('view-boxes-section');
 }
 
-// Recharger l'interface avec les données sauvegardées au chargement de la page
-window.onload = function() {
-    updateUI();
-    getRandomPartition();
-};
+// Ajouter un événement pour le bouton "Enregistrer les modifications"
+document.getElementById('save-edit-button').addEventListener('click', saveEditPartition);
+
+// Ajouter un événement pour le bouton "Annuler"
+document.getElementById('cancel-edit-button').addEventListener('click', cancelEditPartition);
 
 // Fonction pour ouvrir/fermer les boîtes
 document.addEventListener('DOMContentLoaded', () => {
@@ -172,3 +196,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Recharger l'interface avec les données sauvegardées au chargement de la page
+window.onload = function() {
+    updateUI();
+    getRandomPartition();
+};

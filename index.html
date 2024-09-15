@@ -22,46 +22,32 @@
         <h2>Boîtes Leitner</h2>
         <div id="boxes">
             <div class="box-container" data-box="1">
-                <div class="box-title">Boîte 1</div>
-                <div class="box-content">
-                    <ul id="box1"></ul>
-                </div>
+                <h3 class="box-title">Boîte 1</h3>
+                <ul id="box1"></ul>
             </div>
             <div class="box-container" data-box="2">
-                <div class="box-title">Boîte 2</div>
-                <div class="box-content">
-                    <ul id="box2"></ul>
-                </div>
+                <h3 class="box-title">Boîte 2</h3>
+                <ul id="box2"></ul>
             </div>
             <div class="box-container" data-box="3">
-                <div class="box-title">Boîte 3</div>
-                <div class="box-content">
-                    <ul id="box3"></ul>
-                </div>
+                <h3 class="box-title">Boîte 3</h3>
+                <ul id="box3"></ul>
             </div>
             <div class="box-container" data-box="4">
-                <div class="box-title">Boîte 4</div>
-                <div class="box-content">
-                    <ul id="box4"></ul>
-                </div>
+                <h3 class="box-title">Boîte 4</h3>
+                <ul id="box4"></ul>
             </div>
             <div class="box-container" data-box="5">
-                <div class="box-title">Boîte 5</div>
-                <div class="box-content">
-                    <ul id="box5"></ul>
-                </div>
+                <h3 class="box-title">Boîte 5</h3>
+                <ul id="box5"></ul>
             </div>
             <div class="box-container" data-box="6">
-                <div class="box-title">Boîte 6</div>
-                <div class="box-content">
-                    <ul id="box6"></ul>
-                </div>
+                <h3 class="box-title">Boîte 6</h3>
+                <ul id="box6"></ul>
             </div>
             <div class="box-container" data-box="7">
-                <div class="box-title">Boîte 7</div>
-                <div class="box-content">
-                    <ul id="box7"></ul>
-                </div>
+                <h3 class="box-title">Boîte 7</h3>
+                <ul id="box7"></ul>
             </div>
         </div>
     </section>
@@ -79,6 +65,30 @@
         <p id="partition-display">Aucune partition due pour révision</p>
         <button id="correct-button">Correct</button>
         <button id="incorrect-button">Incorrect</button>
+    </section>
+
+    <!-- Page: Modifier une partition -->
+    <section id="edit-partition-section" class="page-section" style="display: none;">
+        <h2>Modifier une Partition</h2>
+        <label for="edit-partition-name">Nom de la partition</label>
+        <input type="text" id="edit-partition-name">
+        
+        <label for="edit-box-number">Changer de boîte</label>
+        <select id="edit-box-number">
+            <option value="1">Boîte 1</option>
+            <option value="2">Boîte 2</option>
+            <option value="3">Boîte 3</option>
+            <option value="4">Boîte 4</option>
+            <option value="5">Boîte 5</option>
+            <option value="6">Boîte 6</option>
+            <option value="7">Boîte 7</option>
+        </select>
+        
+        <label for="edit-due-date">Date de révision</label>
+        <input type="date" id="edit-due-date">
+        
+        <button id="save-edit-button">Enregistrer les modifications</button>
+        <button id="cancel-edit-button">Annuler</button>
     </section>
 
     <script src="script.js"></script>
