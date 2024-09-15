@@ -42,16 +42,28 @@ function updateUI() {
     for (let i = 1; i <= 7; i++) {
         const ul = document.getElementById(`box${i}`);
         ul.innerHTML = "";
-        if (boxes[i] && boxes[i].length > 0) {  // Vérifier si la boîte contient des partitions
-            boxes[i].forEach(partition => {
+        if (boxes[i] && boxes[i].length > 0) {
+            boxes[i].forEach((partition, index) => {
                 const li = document.createElement('li');
-                li.textContent = `${partition.name} (Révision : ${partition.dueDate})`;
+                li.innerHTML = `
+                    ${partition.name} (Révision : ${partition.dueDate})
+                    <button class="delete-button" data-box="${i}" data-index="${index}">Supprimer</button>
+                `;
                 ul.appendChild(li);
             });
         }
     }
     // Sauvegarder l'état des boîtes dans le localStorage
     localStorage.setItem('leitnerBoxes', JSON.stringify(boxes));
+
+    // Ajouter les écouteurs pour la suppression après le rendu de l'interface
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const boxNumber = e.target.getAttribute('data-box');
+            const partitionIndex = e.target.getAttribute('data-index');
+            confirmDeletePartition(boxNumber, partitionIndex);
+        });
+    });
 }
 
 // Ajouter une partition
@@ -105,6 +117,20 @@ document.getElementById('incorrect-button').addEventListener('click', () => {
         getRandomPartition();
     }
 });
+
+// Fonction pour confirmer la suppression
+function confirmDeletePartition(boxNumber, partitionIndex) {
+    const confirmation = confirm("Voulez-vous vraiment supprimer cette partition ?");
+    if (confirmation) {
+        deletePartition(boxNumber, partitionIndex);
+    }
+}
+
+// Fonction pour supprimer une partition
+function deletePartition(boxNumber, partitionIndex) {
+    boxes[boxNumber].splice(partitionIndex, 1);
+    updateUI();
+}
 
 // Recharger l'interface avec les données sauvegardées au chargement de la page
 window.onload = function() {
