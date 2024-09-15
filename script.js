@@ -101,3 +101,49 @@ function getRandomPartition() {
             currentPartition = duePartitions[index];
             document.getElementById('partition-display').textContent = currentPartition.name;
             return;
+        }
+    }
+    document.getElementById('partition-display').textContent = "Aucune partition due pour révision";
+}
+
+// Bouton "Correct"
+document.getElementById('correct-button').addEventListener('click', () => {
+    if (currentPartition && currentBox < 7) {
+        boxes[currentBox] = boxes[currentBox].filter(p => p !== currentPartition);
+        currentPartition.dueDate = addDays(new Date(), revisionIntervals[currentBox + 1]).toISOString().split('T')[0];
+        boxes[currentBox + 1].push(currentPartition);
+        updateUI();
+        getRandomPartition();
+    }
+});
+
+// Bouton "Incorrect"
+document.getElementById('incorrect-button').addEventListener('click', () => {
+    if (currentPartition && currentBox > 1) {
+        boxes[currentBox] = boxes[currentBox].filter(p => p !== currentPartition);
+        currentPartition.dueDate = addDays(new Date(), revisionIntervals[currentBox - 1]).toISOString().split('T')[0];
+        boxes[currentBox - 1].push(currentPartition);
+        updateUI();
+        getRandomPartition();
+    }
+});
+
+// Fonction pour confirmer la suppression
+function confirmDeletePartition(boxNumber, partitionIndex) {
+    const confirmation = confirm("Voulez-vous vraiment supprimer cette partition ?");
+    if (confirmation) {
+        deletePartition(boxNumber, partitionIndex);
+    }
+}
+
+// Fonction pour supprimer une partition
+function deletePartition(boxNumber, partitionIndex) {
+    boxes[boxNumber].splice(partitionIndex, 1);
+    updateUI();
+}
+
+// Recharger l'interface avec les données sauvegardées au chargement de la page
+window.onload = function() {
+    updateUI();
+    getRandomPartition();
+};
