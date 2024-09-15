@@ -37,18 +37,7 @@ function isDueForRevision(dueDate) {
     return new Date(dueDate) <= today;
 }
 
-// Fonction pour mettre à jour les titres des boîtes avec le nombre de partitions
-function updateBoxTitles() {
-    for (let i = 1; i <= 7; i++) {
-        const boxTitle = document.querySelector(`.box-container[data-box="${i}"] .box-title`);
-        if (boxTitle) {
-            const partitionCount = boxes[i].length;
-            boxTitle.innerHTML = `Boîte ${i} (${partitionCount} partition${partitionCount !== 1 ? 's' : ''})`;
-        }
-    }
-}
-
-// Fonction pour mettre à jour l'interface utilisateur
+// Mettre à jour l'interface utilisateur
 function updateUI() {
     for (let i = 1; i <= 7; i++) {
         const ul = document.getElementById(`box${i}`);
@@ -63,8 +52,12 @@ function updateUI() {
                 ul.appendChild(li);
             });
         }
+        // Mettre à jour le titre de la boîte avec le nombre de partitions
+        const boxTitle = document.querySelector(`#box${i} ~ h3`);
+        if (boxTitle) {
+            boxTitle.textContent = `Boîte ${i} (${boxes[i].length} partitions)`;
+        }
     }
-    updateBoxTitles(); // Met à jour les titres des boîtes avec le nombre de partitions
     localStorage.setItem('leitnerBoxes', JSON.stringify(boxes));
 
     document.querySelectorAll('.delete-cross').forEach(cross => {
@@ -101,6 +94,7 @@ document.getElementById('add-button').addEventListener('click', () => {
 
 let currentPartition = null;
 let currentBox = 1;
+let editPartition = null;
 
 // Sélectionner une partition aléatoire due pour révision
 function getRandomPartition() {
@@ -140,13 +134,18 @@ document.getElementById('incorrect-button').addEventListener('click', () => {
     }
 });
 
-// Fonction pour afficher la section de modification
-function showEditPartitionSection(partition, boxNumber, index) {
-    editPartition = { partition, boxNumber, index };
-    document.getElementById('edit-partition-name').value = partition.name;
-    document.getElementById('edit-box-number').value = boxNumber;
-    document.getElementById('edit-due-date').value = partition.dueDate;
-    showPage('edit-partition-section');
+// Fonction pour confirmer la suppression
+function confirmDeletePartition(boxNumber, partitionIndex) {
+    const confirmation = confirm("Voulez-vous vraiment supprimer cette partition ?");
+    if (confirmation) {
+        deletePartition(boxNumber, partitionIndex);
+    }
+}
+
+// Fonction pour supprimer une partition
+function deletePartition(boxNumber, partitionIndex) {
+    boxes[boxNumber].splice(partitionIndex, 1);
+    updateUI();
 }
 
 // Fonction pour enregistrer les modifications de la partition
@@ -180,22 +179,36 @@ function cancelEditPartition() {
     showPage('view-boxes-section');
 }
 
+// Fonction pour supprimer la partition
+function deletePartition() {
+    if (editPartition) {
+        if (confirm("Voulez-vous vraiment supprimer cette partition ?")) {
+            // Supprimer la partition de la boîte
+            boxes[editPartition.boxNumber].splice(editPartition.index, 1);
+            editPartition = null;
+            updateUI();
+            showPage('view-boxes-section');
+        }
+    }
+}
+
 // Ajouter un événement pour le bouton "Enregistrer les modifications"
 document.getElementById('save-edit-button').addEventListener('click', saveEditPartition);
 
 // Ajouter un événement pour le bouton "Annuler"
 document.getElementById('cancel-edit-button').addEventListener('click', cancelEditPartition);
 
-// Fonction pour ouvrir/fermer les boîtes
-document.addEventListener('DOMContentLoaded', () => {
-    const boxContainers = document.querySelectorAll('.box-container');
+// Ajouter un événement pour le bouton "Supprimer la partition"
+document.getElementById('delete-partition-button').addEventListener('click', deletePartition);
 
-    boxContainers.forEach(container => {
-        container.addEventListener('click', () => {
-            container.classList.toggle('open');
-        });
-    });
-});
+// Fonction pour afficher la section de modification
+function showEditPartitionSection(partition, boxNumber, index) {
+    editPartition = { partition, boxNumber, index };
+    document.getElementById('edit-partition-name').value = partition.name;
+    document.getElementById('edit-box-number').value = boxNumber;
+    document.getElementById('edit-due-date').value = partition.dueDate;
+    showPage('edit-partition-section');
+}
 
 // Recharger l'interface avec les données sauvegardées au chargement de la page
 window.onload = function() {
