@@ -42,11 +42,13 @@ function updateUI() {
     for (let i = 1; i <= 7; i++) {
         const ul = document.getElementById(`box${i}`);
         ul.innerHTML = "";
-        boxes[i].forEach(partition => {
-            const li = document.createElement('li');
-            li.textContent = `${partition.name} (Révision : ${partition.dueDate})`;
-            ul.appendChild(li);
-        });
+        if (boxes[i] && boxes[i].length > 0) {  // Vérifier si la boîte contient des partitions
+            boxes[i].forEach(partition => {
+                const li = document.createElement('li');
+                li.textContent = `${partition.name} (Révision : ${partition.dueDate})`;
+                ul.appendChild(li);
+            });
+        }
     }
     // Sauvegarder l'état des boîtes dans le localStorage
     localStorage.setItem('leitnerBoxes', JSON.stringify(boxes));
@@ -68,6 +70,7 @@ let currentBox = 1;
 
 // Sélectionner une partition aléatoire due pour révision
 function getRandomPartition() {
+    currentPartition = null;  // Réinitialiser la partition en cours
     for (let i = 1; i <= 7; i++) {
         const duePartitions = boxes[i].filter(partition => isDueForRevision(partition.dueDate));
         if (duePartitions.length > 0) {
@@ -75,11 +78,10 @@ function getRandomPartition() {
             const index = Math.floor(Math.random() * duePartitions.length);
             currentPartition = duePartitions[index];
             document.getElementById('partition-display').textContent = currentPartition.name;
-            break;
-        } else {
-            document.getElementById('partition-display').textContent = "Aucune partition due pour révision";
+            return;  // Arrêter la boucle dès qu'une partition est trouvée
         }
     }
+    document.getElementById('partition-display').textContent = "Aucune partition due pour révision";
 }
 
 // Bouton "Correct"
