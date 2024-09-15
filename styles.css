@@ -1,54 +1,10 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f9f9f9;
-}
-
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px 0;
-}
-
-#leitner-boxes {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin: 20px;
-}
-
-.box {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 10px;
-    width: 30%;
-    margin: 10px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin: 5px 0;
-    padding: 5px;
-    background-color: #eee;
-}
-
-#add-partition, #practice {
-    margin: 20px 0;
-}
-
-button {
-    padding: 10px 20px;
-    margin: 5px;
+.delete-cross {
+    color: red;
     cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    margin-left: 10px;
+    font-weight: bold;
 }
 
-button:hover {
-    background-color: #45a049;
+.delete-cross:hover {
+    color: darkred;
 }

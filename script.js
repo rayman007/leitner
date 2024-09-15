@@ -47,7 +47,7 @@ function updateUI() {
                 const li = document.createElement('li');
                 li.innerHTML = `
                     ${partition.name} (Révision : ${partition.dueDate})
-                    <button class="delete-button" data-box="${i}" data-index="${index}">Supprimer</button>
+                    <span class="delete-cross" data-box="${i}" data-index="${index}">&times;</span>
                 `;
                 ul.appendChild(li);
             });
@@ -57,8 +57,8 @@ function updateUI() {
     localStorage.setItem('leitnerBoxes', JSON.stringify(boxes));
 
     // Ajouter les écouteurs pour la suppression après le rendu de l'interface
-    document.querySelectorAll('.delete-button').forEach(button => {
-        button.addEventListener('click', (e) => {
+    document.querySelectorAll('.delete-cross').forEach(cross => {
+        cross.addEventListener('click', (e) => {
             const boxNumber = e.target.getAttribute('data-box');
             const partitionIndex = e.target.getAttribute('data-index');
             confirmDeletePartition(boxNumber, partitionIndex);
