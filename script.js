@@ -53,10 +53,8 @@ function updateUI() {
             });
         }
     }
-    // Sauvegarder l'état des boîtes dans le localStorage
     localStorage.setItem('leitnerBoxes', JSON.stringify(boxes));
 
-    // Ajouter les écouteurs pour la suppression après le rendu de l'interface
     document.querySelectorAll('.delete-cross').forEach(cross => {
         cross.addEventListener('click', (e) => {
             const boxNumber = e.target.getAttribute('data-box');
@@ -65,6 +63,18 @@ function updateUI() {
         });
     });
 }
+
+// Navigation entre les pages
+function showPage(sectionId) {
+    const sections = document.querySelectorAll('.page-section');
+    sections.forEach(section => section.style.display = 'none');
+    document.getElementById(sectionId).style.display = 'block';
+}
+
+// Gestion des événements pour la navigation
+document.getElementById('view-boxes').addEventListener('click', () => showPage('view-boxes-section'));
+document.getElementById('add-partition').addEventListener('click', () => showPage('add-partition-section'));
+document.getElementById('today-revisions').addEventListener('click', () => showPage('today-revisions-section'));
 
 // Ajouter une partition
 document.getElementById('add-button').addEventListener('click', () => {
@@ -82,7 +92,7 @@ let currentBox = 1;
 
 // Sélectionner une partition aléatoire due pour révision
 function getRandomPartition() {
-    currentPartition = null;  // Réinitialiser la partition en cours
+    currentPartition = null;
     for (let i = 1; i <= 7; i++) {
         const duePartitions = boxes[i].filter(partition => isDueForRevision(partition.dueDate));
         if (duePartitions.length > 0) {
@@ -90,50 +100,4 @@ function getRandomPartition() {
             const index = Math.floor(Math.random() * duePartitions.length);
             currentPartition = duePartitions[index];
             document.getElementById('partition-display').textContent = currentPartition.name;
-            return;  // Arrêter la boucle dès qu'une partition est trouvée
-        }
-    }
-    document.getElementById('partition-display').textContent = "Aucune partition due pour révision";
-}
-
-// Bouton "Correct"
-document.getElementById('correct-button').addEventListener('click', () => {
-    if (currentPartition && currentBox < 7) {
-        boxes[currentBox] = boxes[currentBox].filter(p => p !== currentPartition);
-        currentPartition.dueDate = addDays(new Date(), revisionIntervals[currentBox + 1]).toISOString().split('T')[0];
-        boxes[currentBox + 1].push(currentPartition);
-        updateUI();
-        getRandomPartition();
-    }
-});
-
-// Bouton "Incorrect"
-document.getElementById('incorrect-button').addEventListener('click', () => {
-    if (currentPartition && currentBox > 1) {
-        boxes[currentBox] = boxes[currentBox].filter(p => p !== currentPartition);
-        currentPartition.dueDate = addDays(new Date(), revisionIntervals[currentBox - 1]).toISOString().split('T')[0];
-        boxes[currentBox - 1].push(currentPartition);
-        updateUI();
-        getRandomPartition();
-    }
-});
-
-// Fonction pour confirmer la suppression
-function confirmDeletePartition(boxNumber, partitionIndex) {
-    const confirmation = confirm("Voulez-vous vraiment supprimer cette partition ?");
-    if (confirmation) {
-        deletePartition(boxNumber, partitionIndex);
-    }
-}
-
-// Fonction pour supprimer une partition
-function deletePartition(boxNumber, partitionIndex) {
-    boxes[boxNumber].splice(partitionIndex, 1);
-    updateUI();
-}
-
-// Recharger l'interface avec les données sauvegardées au chargement de la page
-window.onload = function() {
-    updateUI();
-    getRandomPartition();
-};
+            return;
