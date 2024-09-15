@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apprentissage des Partitions - Boîtes de Leitner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Apprentissage des Partitions de Piano avec les Boîtes de Leitner</h1>
+    </header>
+
+    <main>
+        <section id="leitner-boxes">
+            <div class="box" data-box="1"><h2>Boîte 1</h2><ul id="box1"></ul></div>
+            <div class="box" data-box="2"><h2>Boîte 2</h2><ul id="box2"></ul></div>
+            <div class="box" data-box="3"><h2>Boîte 3</h2><ul id="box3"></ul></div>
+            <div class="box" data-box="4"><h2>Boîte 4</h2><ul id="box4"></ul></div>
+            <div class="box" data-box="5"><h2>Boîte 5</h2><ul id="box5"></ul></div>
+            <div class="box" data-box="6"><h2>Boîte 6</h2><ul id="box6"></ul></div>
+            <div class="box" data-box="7"><h2>Boîte 7</h2><ul id="box7"></ul></div>
+        </section>
+
+        <section id="add-partition">
+            <h3>Ajouter une partition</h3>
+            <input type="text" id="partition-name" placeholder="Nom de la partition">
+            <button id="add-button">Ajouter</button>
+        </section>
+
+        <section id="practice">
+            <h3>Pratiquer</h3>
+            <div id="current-partition">
+                <p id="partition-display">Sélectionner une partition pour commencer</p>
+                <button id="correct-button">Correct</button>
+                <button id="incorrect-button">Incorrect</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
